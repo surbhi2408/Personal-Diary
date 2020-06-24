@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:title="General">
+            <menu>
+                <item
+                    android:id="@+id/notes"
+                    android:icon="@drawable/ic_event_note_black_24dp"
+                    android:title="@string/menu_notes" />
+                <item
+                    android:id="@+id/addnotes"
+                    android:icon="@drawable/ic_add_circle_black_24dp"
+                    android:title="@string/menu_addNotes" />
+                <item
+                    android:id="@+id/sync"
+                    android:icon="@drawable/ic_sync_black_24dp"
+                    android:title="@string/menu_sync" />
+            </menu>
+        </item>
+    </group>
+    <item android:title="Support">
+        <menu>
+            <item
+                android:id="@+id/rating"
+                android:icon="@drawable/ic_star_half_black_24dp"
+                android:title="@string/menu_rating" />
+            <item
+                android:id="@+id/shareApp"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_shareApp" />
+        </menu>
+    </item>
+
+    <item android:title="Logout">
+        <menu>
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_vpn_key_black_24dp"
+                android:title="@string/menu_logout" />
+        </menu>
+    </item>
+
+</menu>

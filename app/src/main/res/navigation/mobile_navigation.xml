@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/notes">
+
+    <fragment
+        android:id="@+id/notes"
+        android:name="com.example.diary.ui.Notes"
+        android:label="@string/menu_notes"
+        tools:layout="@layout/notes_fragment" />
+
+    <fragment
+        android:id="@+id/addnotes"
+        android:name="com.example.diary.ui.AddNotes"
+        android:label="@string/menu_addNotes"
+        tools:layout="@layout/add_notes_fragment" />
+
+    <fragment
+        android:id="@+id/sync"
+        android:name="com.example.diary.ui.SyncNotes"
+        android:label="@string/menu_sync"
+        tools:layout="@layout/sync_notes_fragment" />
+
+    <fragment
+        android:id="@+id/rating"
+        android:name="com.example.diary.ui.RateApp"
+        android:label="@string/menu_rating"
+        tools:layout="@layout/rate_app_fragment" />
+
+    <fragment
+        android:id="@+id/shareApp"
+        android:name="com.example.diary.ui.ShareApp"
+        android:label="@string/menu_shareApp"
+        tools:layout="@layout/share_app_fragment" />
+
+    <fragment
+        android:id="@+id/logout"
+        android:name="com.example.diary.ui.Logout"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/logout_fragment" />
+</navigation>
