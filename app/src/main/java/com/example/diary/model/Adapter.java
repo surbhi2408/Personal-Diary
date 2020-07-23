@@ -5,6 +5,8 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,22 +14,35 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.diary.note.NoteDetails;
 import com.example.diary.R;
+import com.example.diary.note.NoteDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>
+public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements Filterable
 {
     List<String> titles;
     List<String> content;
+    //ImageView imageView;
+    private List<Note> notes;
+    private List<Note> noteSource;
+    //private Timer timer;
 
-    public Adapter(List<String> title,List<String> content)
+    public Adapter(List<Note> notes) {
+        this.notes = notes;
+        this.noteSource = new ArrayList<>(notes);
+    }
+
+    public Adapter(List<String> title, List<String> content)
     {
         this.titles = title;
         this.content = content;
+        //this.notes = notes;
+        //this.noteSource = noteSource;
+        //this.imageView = imageView;
     }
 
     @NonNull
@@ -85,6 +100,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView noteTitle,noteContent;
+        //ImageView noteImage;
         View view;
         CardView cardView;
 
@@ -92,8 +108,93 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>
             super(itemView);
             noteTitle = itemView.findViewById(R.id.titles);
             noteContent = itemView.findViewById(R.id.content);
+            //noteImage = itemView.findViewById(R.id.imageNoteView);
             cardView = itemView.findViewById(R.id.noteCard);
             view = itemView;
         }
     }
+
+//    public void setFilter(List<Note> FilteredDataList)
+//    {
+//        notes = FilteredDataList;
+//        notifyDataSetChanged();
+//    }
+
+//    public void searchNotes(final String searchKeyword)
+//    {
+//        timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                if(searchKeyword.trim().isEmpty())
+//                {
+//                    notes = noteSource;
+//                }
+//                else
+//                {
+//                    ArrayList<Note> tmp = new ArrayList<>();
+//                    for(Note note : noteSource)
+//                    {
+//                        if(note.getTitle().toLowerCase().contains(searchKeyword.toLowerCase())
+//                                || note.getContent().toLowerCase().contains(searchKeyword.toLowerCase()))
+//                        {
+//                            tmp.add(note);
+//                        }
+//                    }
+//                    notes = tmp;
+//                }
+//                new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        notifyDataSetChanged();
+//                    }
+//                });
+//            }
+//        },500);
+//    }
+//
+//    public void cancelTimer()
+//    {
+//        if(timer != null)
+//        {
+//            timer.cancel();
+//        }
+//    }
+
+    @Override
+    public Filter getFilter() {
+        return noteFilter;
+    }
+
+    private Filter noteFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Note> filteredList = new ArrayList<>();
+            if(constraint.toString().isEmpty())
+            {
+                filteredList.addAll(noteSource);
+            }
+            else
+            {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for(Note item : noteSource)
+                {
+                    if(item.getTitle().toLowerCase().contains(filterPattern) || item.getContent().toLowerCase().contains(filterPattern))
+                    {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            notes.clear();
+            notes.addAll((Collection<? extends Note>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

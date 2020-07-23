@@ -39,6 +39,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.2.2'
     implementation 'com.firebaseui:firebase-ui-firestore:4.1.0'
     implementation 'com.firebaseui:firebase-ui-auth:6.2.1'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
+
+    implementation 'com.wdullaer:materialdatetimepicker:1.2.1'
+    implementation 'com.getbase:floatingactionbutton:1.9.0'
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

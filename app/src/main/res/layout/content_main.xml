@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="@drawable/diary2"
+    android:background="@color/color_two"
     tools:showIn="@layout/app_bar_main"
     android:alpha="0.7">
 

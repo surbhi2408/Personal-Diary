@@ -16,5 +16,8 @@
     <color name="dirtygreen">#7b915c</color>
     <color name="color_two">#E3E0E0</color>
     <color name="whiteColor">#FFFFFF</color>
+    <color name="darkGray">#31343d</color>
+    <color name="black">#000000</color>
     <color name="darkblue">#2c679e</color>
+    <color name="fab_pressed">#546e7a</color>
 </resources>

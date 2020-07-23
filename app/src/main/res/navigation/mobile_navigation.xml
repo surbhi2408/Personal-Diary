@@ -24,6 +24,12 @@
         tools:layout="@layout/sync_notes_fragment" />
 
     <fragment
+        android:id="@+id/reminder"
+        android:name="com.example.diary.ui.Reminders"
+        android:label="@string/menu_reminder"
+        tools:layout="@layout/reminders_fragment" />
+
+    <fragment
         android:id="@+id/rating"
         android:name="com.example.diary.ui.RateApp"
         android:label="@string/menu_rating"

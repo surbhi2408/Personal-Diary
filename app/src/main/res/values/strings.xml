@@ -10,6 +10,7 @@
     <string name="menu_notes">Notes</string>
     <string name="menu_addNotes">Add Notes</string>
     <string name="menu_sync">Sync Notes</string>
+    <string name="menu_reminder">Reminders</string>
     <string name="menu_rating">Rate App</string>
     <string name="menu_shareApp">Share App</string>
     <string name="menu_logout">Logout</string>
@@ -19,5 +20,23 @@
     <string name="title_activity_note_details">NoteDetails</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="Image">image</string>
+    <string name="Add_url">Add Url</string>
     <string name="title_activity_write_notes">WriteNotes</string>
+    <string name="enter_url">Enter URL</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="details">Details</string>
+    <string name="time">Time</string>
+    <string name="repeat">Repeat</string>
+    <string name="repetition_interval">Repetition Interval</string>
+    <string name="type_of_repetition">Type of Repetition</string>
+    <string name="title">Title</string>
+    <string name="date_and_time">Date and Time</string>
+    <string name="repeat_no_and_type">Repeat No and Type</string>
+    <string name="discard_reminder">Discard Reminder</string>
+    <string name="save_reminder">Save Reminder</string>
+    <string name="reminder_title">AlarmReminder</string>
+    <string name="title_activity_add_reminder">Add Reminder</string>
+    <string name="share">Share</string>
 </resources>

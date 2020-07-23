@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/layoutAddUrlContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:background="@drawable/background_dialog">
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/imageAddUrl"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/ic_language_black_24dp"
+        android:tint="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:includeFontPadding="false"
+        android:text="@string/Add_url"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/imageAddUrl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageAddUrl"
+        app:layout_constraintTop_toTopOf="@id/imageAddUrl"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="35sp"
+        android:id="@+id/inputUrl"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="@string/enter_url"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:includeFontPadding="false"
+        android:inputType="textUri"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@id/imageAddUrl" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textAdd"
+        android:layout_marginEnd="8sp"
+        android:layout_marginRight="8sp"
+        android:layout_marginBottom="8dp"
+        android:includeFontPadding="false"
+        android:padding="8dp"
+        android:text="@string/add"
+        android:textColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inputUrl" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textCancel"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:includeFontPadding="false"
+        android:padding="8dp"
+        android:text="@string/cancel"
+        android:textColor="@color/red"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/textAdd"
+        app:layout_constraintTop_toBottomOf="@id/inputUrl" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

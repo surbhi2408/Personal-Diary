@@ -4,6 +4,33 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.diary.authentication.Login;
 import com.example.diary.authentication.Register;
@@ -17,43 +44,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
-import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import android.view.Menu;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FirestoreRecyclerAdapter<Note,NoteViewHolder> noteAdapter;
     FirebaseUser user;
     FirebaseAuth fAuth;
-
+    List<Note> dataList,filteredDataList;
+    List<Note> notesLists;
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -92,9 +89,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             protected void onBindViewHolder(@NonNull NoteViewHolder noteViewHolder, final int i, @NonNull final Note note) {
-
                 noteViewHolder.noteTitle.setText(note.getTitle());
                 noteViewHolder.noteContent.setText(note.getContent());
+//                if(note.getImage() != null) {
+//                    noteViewHolder.noteImage.setImageBitmap(BitmapFactory.decodeFile(note.getImage()));
+//                    noteViewHolder.noteImage.setVisibility(View.VISIBLE);
+//                }
+//                else
+//                {
+//                    noteViewHolder.noteImage.setVisibility(View.GONE);
+//                }
                 final int code = getRandomColor();
                 noteViewHolder.cardView.setCardBackgroundColor(noteViewHolder.view.getResources().getColor(code,null));
                 final String docId = noteAdapter.getSnapshots().getSnapshot(i).getId();
@@ -148,6 +152,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 return false;
                             }
                         });
+
+                        menu.getMenu().add("Share").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT,note.getContent());
+                                startActivity(Intent.createChooser(intent,"Share"));
+                                return false;
+                            }
+                        });
                         menu.show();
                     }
                 });
@@ -170,7 +185,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 startActivity(new Intent(view.getContext(), WriteNotes.class));
                 overridePendingTransition(R.anim.slide_up,R.anim.slide_down);
-                finish();
             }
         });
         drawer = findViewById(R.id.drawer_layout);
@@ -210,6 +224,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            }
 //        });
         noteLists.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        notesLists = new ArrayList<>();
+        adapter = new Adapter(notesLists);
         noteLists.setAdapter(noteAdapter);
 
         View headerView = navigationView.getHeaderView(0);
@@ -232,6 +248,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search your notes");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//                filteredDataList = filter(dataList,newText);
+//                adapter.setFilter(filteredDataList);
+//                if(notesLists.size() != 0)
+//                {
+//                    adapter.searchNotes(newText);
+//                }
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         return true;
     }
 
@@ -250,6 +287,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this,Settings.class));
                 overridePendingTransition(R.anim.slide_up,R.anim.slide_down);
                 break;
+//            case R.id.action_search:
+//                Toast.makeText(this, "Search is clicked.", Toast.LENGTH_SHORT).show();
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -261,8 +301,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
            case R.id.addnotes:
                startActivity(new Intent(MainActivity.this, WriteNotes.class));
                overridePendingTransition(R.anim.slide_up,R.anim.slide_down);
-               finish();
                break;
+
            case R.id.sync:
                if(user.isAnonymous())
                {
@@ -275,9 +315,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                    Toast.makeText(this, "You are Connected.", Toast.LENGTH_SHORT).show();
                }
                break;
+
+           case R.id.reminder:
+               startActivity(new Intent(MainActivity.this, Reminders.class));
+               overridePendingTransition(R.anim.slide_up,R.anim.slide_down);
+               break;
+
+           case R.id.rating:
+               startActivity(new Intent(MainActivity.this,RateApp.class));
+               overridePendingTransition(R.anim.slide_up,R.anim.slide_down);
+               break;
+
            case R.id.logout:
                checkUser();
                break;
+
            default:
                Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
        }
@@ -324,9 +376,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         warning.show();
     }
 
+//    public List<Note> filter(List<Note> dataList,String newText)
+//    {
+//        newText = newText.toLowerCase();
+//        String text;
+//        filteredDataList = new ArrayList<>();
+//        for(Note dataFromDataList : dataList)
+//        {
+//            text = dataFromDataList.getTitle().toLowerCase();
+//            if(text.contains((newText)))
+//            {
+//                filteredDataList.add(dataFromDataList);
+//            }
+//        }
+//        return filteredDataList;
+//    }
+
     public class NoteViewHolder extends RecyclerView.ViewHolder
    {
        TextView noteTitle,noteContent;
+       //ImageView noteImage;
        View view;
        CardView cardView;
 
@@ -334,6 +403,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
            super(itemView);
            noteTitle = itemView.findViewById(R.id.titles);
            noteContent = itemView.findViewById(R.id.content);
+           //noteImage = itemView.findViewById(R.id.imageNoteView);
            cardView = itemView.findViewById(R.id.noteCard);
            view = itemView;
        }

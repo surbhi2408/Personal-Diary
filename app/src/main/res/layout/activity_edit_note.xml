@@ -51,11 +51,13 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_marginEnd="28dp"
         android:layout_marginRight="28dp"
+        app:backgroundTint="@color/colorPrimary"
         android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="30dp"
-        app:srcCompat="@drawable/ic_save_black_24dp" />
+        app:srcCompat="@drawable/ic_save_black_24dp"
+        app:tint="@color/whiteColor"/>
 
     <ProgressBar
         android:id="@+id/progressBar2"

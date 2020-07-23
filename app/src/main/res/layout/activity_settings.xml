@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Settings">
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Change Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/changePassword">
+
+    </Button>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

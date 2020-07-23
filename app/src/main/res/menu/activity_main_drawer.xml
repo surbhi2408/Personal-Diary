@@ -18,6 +18,10 @@
                     android:id="@+id/sync"
                     android:icon="@drawable/ic_sync_black_24dp"
                     android:title="@string/menu_sync" />
+                <item
+                    android:id="@+id/reminder"
+                    android:icon="@drawable/ic_notifications_black_24dp"
+                    android:title="@string/menu_reminder" />
             </menu>
         </item>
     </group>
